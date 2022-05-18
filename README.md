@@ -1,4 +1,8 @@
 # orca_tools
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/pacourbet/orca_tools?display_name=tag&style=plastic)
+![Lines of code](https://img.shields.io/tokei/lines/github/pacourbet/orca_tools?style=plastic)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pacourbet/orca_tools?style=plastic)
+
 A repo to store several orcaflex manip scripts
 
 ## models

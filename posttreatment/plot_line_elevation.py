@@ -1,6 +1,10 @@
 import pickle
 import plotly.graph_objects as go
 import plotly.offline
+import sys
+from extract_line_elevation import extract_line_elevation
+import OrcFxAPI
+
 
 def plot_data(data):
     fig = go.Figure()
@@ -21,8 +25,10 @@ def plot_data(data):
 
     plotly.offline.plot(fig, filename="elevation.html")
 
-if __name__ == "__main__":
-    with open('./data.pkl', 'rb') as f:
-        data = pickle.load(f)
+    return None
 
+if __name__ == "__main__":
+
+    data = extract_line_elevation(OrcFxAPI.Model(sys.argv[1]))
+    
     plot_data(data)

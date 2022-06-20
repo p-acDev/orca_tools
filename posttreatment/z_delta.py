@@ -5,6 +5,8 @@ import tqdm
 import pandas as pd
 from collections import OrderedDict
 from itertools import product
+import sys
+from extract_line_elevation import extract_line_elevation
 
 def nodes_distances(data, line1_name, line2_name):
 
@@ -112,8 +114,7 @@ def build_z_delta(data, side1, side2, output_folder='.'):
 
 if __name__ == "__main__":
 
-    with open('./data.pkl', 'rb') as f:
-        data = pickle.load(f)
+    data = extract_line_elevation(OrcFxAPI.Model(sys.argv[1]))
         
 
     sides1 = ['FRONT', 'BACK']

@@ -1,5 +1,6 @@
 import OrcFxAPI
 import pandas as pd
+import sys
 
 def extract_line_elevation(model):
 
@@ -17,5 +18,5 @@ def extract_line_elevation(model):
 
 if __name__ == "__main__":
 
-    model = OrcFxAPI.Model('./WUS077_#1_ANC_MWL_Initialposition.sim')
+    model = OrcFxAPI.Model(sys.argv[1])
     data = extract_line_elevation(model)

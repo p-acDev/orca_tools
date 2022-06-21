@@ -1,12 +1,15 @@
 import pickle
 import plotly.graph_objects as go
 import plotly.offline
+import plotly.express as px
 import sys
 from extract_line_elevation import extract_line_elevation
 import OrcFxAPI
+import matplotlib.pyplot as plt
+from itertools import product
+import pandas as pd
 
-
-def plot_data(data, output_filename):
+def plot_data(data, input_filename):
     fig = go.Figure()
     for k, v in data.items():
         if 'FRONT' in k:
@@ -25,12 +28,25 @@ def plot_data(data, output_filename):
                                    )
                       )
 
-    plotly.offline.plot(fig, filename=output_filename)
+    plotly.offline.plot(fig, filename=f'{input_filename}_elevation3D.html')
 
+    return None
+
+def do_heatmap(input_filename):
+    for side1, side2 in product(['FRONT', 'BACK'], ['LEFT', 'RIGHT']):
+        try:
+            df = pd.read_excel(f'{input_filename}_{side1}_Vs_{side2}_delta_z.xlsx', index_col=0)
+            fig = px.imshow(df)
+            plotly.offline.plot(fig, filename=f'{input_filename}_{side1}_Vs_{side2}_heatmap_elevation.html')            
+            #plt.savefig(f'{input_filename}_{side1}_Vs_{side2}_heatmap_elevation.png')
+        except FileNotFoundError:
+            print("Heatmap not created as clashing report not done for the moment")
     return None
 
 if __name__ == "__main__":
 
     data = extract_line_elevation(OrcFxAPI.Model(sys.argv[1]))
-    output_filename = f'{sys.argv[1][:-4]}_elevation3D.html'
-    plot_data(data, output_filename)
+    input_filename = sys.argv[1][:-4]
+
+    plot_data(data, input_filename)
+    do_heatmap(input_filename)

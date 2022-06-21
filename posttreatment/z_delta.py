@@ -58,19 +58,21 @@ def build_clashing_matrices(data, side1, side2):
     clashing_data = OrderedDict()
     
     for line_name_check in tqdm.tqdm([line_name for line_name in data.keys() if side1 in line_name]):
+        
         clearance = potential_crossing(data, line_name_check, side2)
-        # add the Z in clearance df
-        clearance['z_line_check'] = clearance['line_name_check_node'].apply(lambda elem:data[line_name_check]['Z'][int(elem)])
-        crossing_line_names = clearance.index
-        z_crossing_line = [data[crossing_line]['Z'][int(clearance['crossing_line_check_node'].loc[crossing_line])] for crossing_line in clearance.index]
-        clearance['z_crossing_line'] = z_crossing_line
-        clearance['delta_z'] = clearance['z_line_check'] - clearance['z_crossing_line']
-        clashing_data[line_name_check] = clearance
+        if not clearance.empty:
+            # add the Z in clearance df
+            clearance['z_line_check'] = clearance['line_name_check_node'].apply(lambda elem:data[line_name_check]['Z'][int(elem)])
+            crossing_line_names = clearance.index
+            z_crossing_line = [data[crossing_line]['Z'][int(clearance['crossing_line_check_node'].loc[crossing_line])] for crossing_line in clearance.index]
+            clearance['z_crossing_line'] = z_crossing_line
+            clearance['delta_z'] = clearance['z_line_check'] - clearance['z_crossing_line']
+            clashing_data[line_name_check] = clearance
         
     return clashing_data
     
 
-def build_z_delta(data, side1, side2, output_folder='.'):
+def build_z_delta(data, side1, side2, output_name=''):
 
     print(f'{side1} Vs {side2}')
     
@@ -93,19 +95,19 @@ def build_z_delta(data, side1, side2, output_folder='.'):
 
         # export the results
         # export clashing data
-        with pd.ExcelWriter(f'{output_folder}/{side1}_Vs_{side2}_clashing_report.xlsx') as excel_writer:
+        with pd.ExcelWriter(f'{output_name}_{side1}_Vs_{side2}_clashing_report.xlsx') as excel_writer:
             for line_name_check in clashing_data.keys(): 
                 df_clashing = clashing_data[line_name_check]
                 df_clashing.to_excel(excel_writer, sheet_name = line_name_check)
 
         # export the delta_z matrix
-        df.to_excel(f'{output_folder}/{side1}_Vs_{side2}_delta_z.xlsx')
+        df.to_excel(f'{output_name}_{side1}_Vs_{side2}_delta_z.xlsx')
     
         return clashing_data, df
 
     else:
 
-        with open(f'{side1}_Vs_{side2}_NO_CROSSING', 'wb') as f:
+        with open(f'{output_name}_{side1}_Vs_{side2}_NO_CROSSING', 'wb') as f:
             pass
         print('NO CLASHING')
         return {}, pd.DataFrame()
@@ -120,7 +122,7 @@ if __name__ == "__main__":
     sides1 = ['FRONT', 'BACK']
     sides2 = ['LEFT', 'RIGHT']
     for side1, side2 in product(sides1, sides2):
-        clashing_data, df = build_z_delta(data, side1, side2)
-    
+        clashing_data, df = build_z_delta(data, side1, side2, sys.argv[1][:-4])
+
 
 

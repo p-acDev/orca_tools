@@ -17,6 +17,8 @@ def plot_data(data, output_filename):
             color='green'
         elif 'RIGHT' in k:
             color='orange'
+        else:
+            color='black'
         fig.add_trace(go.Scatter3d(x=data[k]['X'], y=data[k]['Y'], z=data[k]['Z'],
                                    name=k,
                                    marker=dict(size=5, color=color)
@@ -31,4 +33,4 @@ if __name__ == "__main__":
 
     data = extract_line_elevation(OrcFxAPI.Model(sys.argv[1]))
     output_filename = f'{sys.argv[1][:-4]}_elevation3D.html'
-    plot_data(data)
+    plot_data(data, output_filename)

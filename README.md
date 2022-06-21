@@ -12,7 +12,17 @@ Just double click on the `bathy_mesh.bat`
 
 ### loadcases
 - Just fill in the input load excel file in Orcaflex axis convention
-![image](https://user-images.githubusercontent.com/44846069/168990534-af93f0b9-4de0-4c3d-b16b-9b57e63466e4.png)
+
+| direction | X    | Y    | Z |
+| --------- | ---- | ---- | - |
+| 0         | 50   | \-81 | 0 |
+| 20        | 85   | 49   | 0 |
+| 30        | 60   | 39   | 0 |
+| 50        | 78   | \-36 | 0 |
+| 90        | \-83 | 74   | 0 |
+| 140       | \-9  | \-34 | 0 |
+| 180       | \-11 | 44   | 0 |
+| 270       | \-72 | 12   | 0 |
 
 - Just double click on the `launch_generate.bat`
 

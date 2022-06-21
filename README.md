@@ -35,8 +35,8 @@ This script aims to extract the mooring line loads in the specific format:
 Just double click on the `launch_posttreat.bat`
 
 ### 3 plot and line elevation
-This script aims to do a 3D plot of mooring lines to check visually the line position
-Just double click on the `launch_3Dplot.bat`
+This script aims to do a 3D plot of mooring lines to check visually the line position and a heatmap which is 2D
+Just double click on the `launch_plot.bat`
 
 ### clashing report
 This scripts aims to provide a clashing line report with relative z position of each line Vs each line

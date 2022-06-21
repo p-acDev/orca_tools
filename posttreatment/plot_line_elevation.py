@@ -6,7 +6,7 @@ from extract_line_elevation import extract_line_elevation
 import OrcFxAPI
 
 
-def plot_data(data):
+def plot_data(data, output_filename):
     fig = go.Figure()
     for k, v in data.items():
         if 'FRONT' in k:
@@ -23,12 +23,12 @@ def plot_data(data):
                                    )
                       )
 
-    plotly.offline.plot(fig, filename="elevation.html")
+    plotly.offline.plot(fig, filename=output_filename)
 
     return None
 
 if __name__ == "__main__":
 
     data = extract_line_elevation(OrcFxAPI.Model(sys.argv[1]))
-    
+    output_filename = f'{sys.argv[1][:-4]}_elevation3D.html'
     plot_data(data)

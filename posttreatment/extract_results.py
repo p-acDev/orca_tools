@@ -54,7 +54,7 @@ def get_filename_ordered(directions, folder, water_level):
 
     df = pd.DataFrame(directions, index=[1]).T.sort_values(by=1)
 
-    filenames = [[elem for elem in os.listdir(folder) if f'{water_level}_initialposition' in elem][0]]
+    filenames = [[elem for elem in os.listdir(folder) if (f'{water_level}_initialposition' in elem)][0]]
 
     for elem in df.index:
         for filename in os.listdir(folder):
@@ -67,7 +67,7 @@ def create_output_lines(folder, water_level):
     dfs_lines = []
     dfs_islands = []
 
-    all_files_string = " ".join(os.listdir(folder))
+    all_files_string = " ".join([elem for elem in os.listdir(folder) if elem.endswith('.sim')])
 
     # get the water level files in order
     directions = get_model_direction(all_files_string, water_level)

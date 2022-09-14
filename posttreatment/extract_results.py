@@ -13,7 +13,7 @@ def extract_lines(model):
 
 def extract_island(model):
 
-    island = [obj for obj in model.objects if type(obj) == OrcFxAPI.OrcaFlex6DBuoyObject][0]
+    island = [obj for obj in model.objects if ((type(obj) == OrcFxAPI.OrcaFlex6DBuoyObject) and ("ARRAY") in obj.name)][0]
 
     return island
 
